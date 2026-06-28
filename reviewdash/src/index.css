@@ -1,0 +1,643 @@
+/* Google Review Dashboard Global Styles - Light Theme Only & Mobile Responsive */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+  --font-sans: 'Poppins', system-ui, sans-serif;
+  --font-google: 'Roboto', 'Google Sans', Arial, sans-serif;
+  
+  /* Dashboard Colors (Light Theme Only) */
+  --bg-dash: #f8fafc;
+  --bg-card: #ffffff;
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --border-color: #e2e8f0;
+  --primary-color: #467222;
+  --primary-hover: #325218;
+  
+  /* Google/Funnel Colors (Default Light Theme) */
+  --google-bg: #ffffff;
+  --google-text: #202124;
+  --google-text-sub: #5f6368;
+  --google-blue: #1a73e8;
+  --google-blue-hover: #155cb0;
+  --google-border: #dadce0;
+  --google-stars: #e8eaed;
+  --google-stars-active: #fbbc05;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-dash);
+  color: var(--text-primary);
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ----------------------------------------------------
+   DASHBOARD / PORTAL SHARED STYLES
+   ---------------------------------------------------- */
+.dash-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-dash);
+  color: var(--text-primary);
+}
+
+.dash-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dash-logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.dash-logo span {
+  color: var(--primary-color);
+}
+
+.dash-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.dash-user-email {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.dash-main {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.dash-title-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+}
+
+.dash-title-section h1 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+/* Grid & Cards */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+}
+
+.metric-title {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.metric-value {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.metric-desc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.dash-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.dash-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Tables */
+.table-wrapper {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+.table-wrapper::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 3px;
+}
+
+.dash-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.dash-table th {
+  background-color: #f1f5f9;
+  color: var(--text-secondary);
+  font-weight: 600;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+
+.dash-table td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-primary);
+  vertical-align: top;
+}
+
+.dash-table tr:last-child td {
+  border-bottom: none;
+}
+
+.dash-table tr:hover td {
+  background-color: #f8fafc;
+}
+
+/* Badge classes */
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-diverted {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.badge-facilitated {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+/* Forms & Inputs */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.form-group label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.form-control {
+  background-color: #ffffff;
+  border: 1px solid #cbd5e1;
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+}
+
+select.form-control {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.25rem auto;
+  padding-right: 2.5rem;
+  appearance: none;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 4px 6px -1px rgba(50, 82, 24, 0.2), 0 2px 4px -2px rgba(50, 82, 24, 0.15);
+  border: 1px solid #325218;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+  box-shadow: 0 10px 15px -3px rgba(50, 82, 24, 0.3), 0 4px 6px -4px rgba(50, 82, 24, 0.2);
+}
+
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: #334155;
+}
+
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+}
+
+.btn-danger {
+  background-color: #ef4444;
+  color: #fff;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626;
+}
+
+.btn-small {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.8rem;
+  border-radius: 6px;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ----------------------------------------------------
+   GOOGLE REVIEW FUNNEL THEME (LIGHT GOOGLE REPLICA)
+   ---------------------------------------------------- */
+.google-funnel-body {
+  background-color: #f1f3f4;
+  color: var(--google-text);
+  font-family: var(--font-google);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+}
+
+.google-card {
+  background: var(--google-bg);
+  border: 1px solid var(--google-border);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 540px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.google-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.google-logo-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.google-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.05em;
+  display: flex;
+}
+
+.google-logo span:nth-child(1) { color: #4285F4; }
+.google-logo span:nth-child(2) { color: #EA4335; }
+.google-logo span:nth-child(3) { color: #FBBC05; }
+.google-logo span:nth-child(4) { color: #4285F4; }
+.google-logo span:nth-child(5) { color: #34A853; }
+.google-logo span:nth-child(6) { color: #EA4335; }
+
+.google-logo-sub {
+  font-size: 0.75rem;
+  color: var(--google-text-sub);
+  margin-top: -2px;
+}
+
+.google-profile-section {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.google-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #e8f0fe;
+  color: #1a73e8;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+}
+
+.google-profile-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.google-profile-name {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--google-text);
+}
+
+.google-profile-postingtext {
+  font-size: 0.75rem;
+  color: var(--google-text-sub);
+}
+
+/* Stars replica */
+.google-stars-container {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.google-star {
+  font-size: 2.5rem;
+  cursor: pointer;
+  color: var(--google-stars);
+  transition: color 0.1s;
+}
+
+.google-star.active {
+  color: var(--google-stars-active);
+}
+
+.google-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--google-text-sub);
+  text-align: center;
+}
+
+/* Feedback/Copy Section */
+.google-textarea-wrapper {
+  border: 1px solid var(--google-border);
+  border-radius: 4px;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+}
+
+.google-textarea {
+  width: 100%;
+  min-height: 120px;
+  border: none;
+  outline: none;
+  resize: vertical;
+  font-family: var(--font-google);
+  font-size: 0.875rem;
+  color: var(--google-text);
+}
+
+.google-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.google-btn {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  font-family: var(--font-google);
+}
+
+.google-btn-primary {
+  background-color: var(--google-blue);
+  color: #fff;
+}
+
+.google-btn-primary:hover {
+  background-color: var(--google-blue-hover);
+}
+
+.google-btn-text {
+  background-color: transparent;
+  color: var(--google-blue);
+}
+
+.google-btn-text:hover {
+  background-color: rgba(26, 115, 232, 0.04);
+}
+
+/* Suggestion Card copy layout */
+.suggestion-card {
+  background-color: #f8f9fa;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.suggestion-card:hover {
+  background-color: #f1f5f9;
+  border-color: var(--google-blue);
+}
+
+.suggestion-card.copied {
+  background-color: #ecfdf5;
+  border-color: #10b981;
+}
+
+.suggestion-copy-badge {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #e6f4ea;
+  color: #137333;
+  font-size: 0.65rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* ----------------------------------------------------
+   MOBILE RESPONSIVENESS MEDIA QUERIES
+   ---------------------------------------------------- */
+@media (max-width: 768px) {
+  .dash-nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .dash-nav-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+  
+  .dash-nav-actions span {
+    font-size: 0.8rem;
+  }
+  
+  .dash-nav-actions button {
+    width: 100%;
+  }
+
+  .dash-main {
+    padding: 1rem;
+  }
+
+  .dash-title-section {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .dash-title-section h1 {
+    font-size: 1.5rem;
+  }
+
+  .dash-title-section button {
+    width: 100%;
+    margin-top: 0.5rem;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .dash-card {
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .dash-card-title {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .google-btn-container {
+    flex-direction: column-reverse;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .google-btn-container button {
+    width: 100%;
+  }
+
+  .google-card {
+    padding: 1rem;
+  }
+  
+  .google-stars-container {
+    gap: 0.25rem;
+  }
+  
+  .google-star {
+    font-size: 2rem;
+  }
+}
