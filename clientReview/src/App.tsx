@@ -9,6 +9,8 @@ function App() {
   return (
     <Router basename={basename}>
       <Routes>
+        <Route path="/" element={<AuthPortal />} />
+        <Route path="/index.html" element={<AuthPortal />} />
         <Route path="/feedback" element={<PublicFunnel />} />
         <Route path="/login" element={<AuthPortal />} />
         <Route path="/dashboard" element={<ClientDashboard />} />
