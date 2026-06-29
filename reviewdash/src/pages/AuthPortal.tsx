@@ -128,7 +128,7 @@ export default function AuthPortal() {
       const res = await apiFetch('/auth/send-magic-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: email.trim(), redirectUrl })
+        body: JSON.stringify({ email: email.trim(), redirectUrl, portalType: 'admin_reviews' })
       });
 
       const data = await res.json();
