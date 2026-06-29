@@ -88,7 +88,7 @@ export default function AuthPortal() {
     setSuccessMsg('');
 
     try {
-      const redirectUrl = window.location.origin + window.location.pathname;
+      const redirectUrl = window.location.origin + import.meta.env.BASE_URL + 'index.html';
       const res = await apiFetch('/auth/send-magic-link', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
