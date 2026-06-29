@@ -1,0 +1,12 @@
+{
+  "name": "reviews-google-monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix clientReview\" \"npm run dev --prefix reviewdash\"",
+    "build": "npm run build --prefix clientReview && npm run build --prefix reviewdash"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
