@@ -209,8 +209,19 @@ export default function ClientDashboard() {
             <button 
               className={`btn ${copiedLink ? 'btn-secondary' : 'btn-primary'}`} 
               onClick={() => copyFunnelLink(activeClientId as string)}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}
             >
-              {copiedLink ? '✓ Copied Link!' : '🔗 Copy Feedback Page Link'}
+              {copiedLink ? (
+                <>
+                  <svg style={{ width: '14px', height: '14px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                  Copied Link!
+                </>
+              ) : (
+                <>
+                  <svg style={{ width: '14px', height: '14px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+                  Copy Feedback Page Link
+                </>
+              )}
             </button>
           )}
         </div>
@@ -245,7 +256,9 @@ export default function ClientDashboard() {
         </div>
 
         <div className="dash-card">
-          <h3 className="dash-card-title">💡 Funnel Configuration</h3>
+          <h3 className="dash-card-title" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+            <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg> Funnel Configuration
+          </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
             <div>
               <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Google Business Review URL</p>
@@ -262,8 +275,8 @@ export default function ClientDashboard() {
               <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Review Suggestions Style</p>
               {client.suggestion_type === 'custom' ? (
                 <div style={{ marginTop: '0.5rem' }}>
-                  <span style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#166534', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 500 }}>
-                    ✍️ Predefined Custom Templates
+                  <span style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#166534', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 500 }}>
+                    <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Predefined Custom Templates
                   </span>
                   <div style={{ marginTop: '0.5rem', color: '#475569', fontSize: '0.8rem', lineHeight: '1.4' }}>
                     {Array.isArray(client.custom_suggestions) ? client.custom_suggestions.map((s, idx) => (
@@ -276,7 +289,9 @@ export default function ClientDashboard() {
               ) : (
                 <div>
                   <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                    <span style={{ fontSize: '0.8rem', fontWeight: 500, color: '#475569', alignSelf: 'center' }}>🤖 AI:</span>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 500, color: '#475569', alignSelf: 'center', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                      <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M19 8h-1.18c-.4-.48-.89-.9-1.44-1.24L18.15 4.5l-1.41-1.41-2.4 2.4C13.56 5.17 12.8 5 12 5s-1.56.17-2.34.49l-2.4-2.4L5.85 4.5l1.77 2.26c-.55.34-1.04.76-1.44 1.24H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zM9 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg> AI:
+                    </span>
                     {(client.ai_keywords || '').split(',').map((kw, i) => (
                       kw.trim() && (
                         <span 
@@ -295,6 +310,9 @@ export default function ClientDashboard() {
               <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Review Funnel Copy Mode</p>
               <div style={{ marginTop: '0.5rem' }}>
                 <span style={{ 
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '4px',
                   backgroundColor: client.copy_mode === 'manual' ? '#eff6ff' : '#fef3c7', 
                   border: client.copy_mode === 'manual' ? '1px solid #bfdbfe' : '1px solid #fde68a', 
                   color: client.copy_mode === 'manual' ? '#1e40af' : '#92400e', 
@@ -303,7 +321,17 @@ export default function ClientDashboard() {
                   borderRadius: '6px', 
                   fontWeight: 500 
                 }}>
-                  {client.copy_mode === 'manual' ? '📋 Manual Copy & Redirection' : '⚡ Auto Copy & Redirect'}
+                  {client.copy_mode === 'manual' ? (
+                    <>
+                      <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                      Manual Copy & Redirection
+                    </>
+                  ) : (
+                    <>
+                      <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M7 2v11h3v9l7-12h-4l4-8z"/></svg>
+                      Auto Copy & Redirect
+                    </>
+                  )}
                 </span>
               </div>
             </div>
@@ -312,7 +340,9 @@ export default function ClientDashboard() {
 
         <div className="dash-card">
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-            <h3 className="dash-card-title" style={{ marginBottom: 0 }}>📋 Customer Submissions Log</h3>
+            <h3 className="dash-card-title" style={{ marginBottom: 0, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+              <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg> Customer Submissions Log
+            </h3>
             <div style={{ display: 'flex', gap: '0.5rem', backgroundColor: '#f1f5f9', padding: '0.25rem', borderRadius: '8px', border: '1px solid #cbd5e1' }}>
               <button 
                 className={`btn btn-small ${filterType === 'all' ? 'btn-primary' : 'btn-secondary'}`}

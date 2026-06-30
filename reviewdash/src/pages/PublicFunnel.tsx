@@ -231,7 +231,7 @@ export default function PublicFunnel() {
     return (
       <div className="google-funnel-body">
         <div className="google-card" style={{ textAlign: 'center', color: '#ea4335', padding: '3rem' }}>
-          <h3>⚠️ Error</h3>
+          <h3>Error</h3>
           <p style={{ marginTop: '1rem', color: '#5f6368' }}>{errorMsg}</p>
         </div>
       </div>
@@ -377,12 +377,14 @@ export default function PublicFunnel() {
         {!submitted && rating >= 4 && !loading && (
           <div>
             {clientInfo?.copy_mode === 'manual' ? (
-              <div className="google-label" style={{ textAlign: 'left', marginBottom: '1.25rem', color: '#137333', lineHeight: '1.5' }}>
-                🎉 Great! Click any suggestion below to copy it, then click "Continue to Google Review" to leave your feedback:
+              <div className="google-label" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', textAlign: 'left', marginBottom: '1.25rem', color: '#137333', lineHeight: '1.5' }}>
+                <svg style={{ width: '20px', height: '20px', fill: 'currentColor', flexShrink: 0 }} viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span>Great! Click any suggestion below to copy it, then click "Continue to Google Review" to leave your feedback:</span>
               </div>
             ) : (
-              <div className="google-label" style={{ textAlign: 'left', marginBottom: '1.25rem', color: '#137333', lineHeight: '1.5' }}>
-                🎉 <strong>Review template auto-copied!</strong> We have redirected you to Google Reviews. If the pop-up didn't open, please click "Continue to Google Review" below.
+              <div className="google-label" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', textAlign: 'left', marginBottom: '1.25rem', color: '#137333', lineHeight: '1.5' }}>
+                <svg style={{ width: '20px', height: '20px', fill: 'currentColor', flexShrink: 0 }} viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                <span><strong>Review template auto-copied!</strong> We have redirected you to Google Reviews. If the pop-up didn't open, please click "Continue to Google Review" below.</span>
               </div>
             )}
 
@@ -397,7 +399,10 @@ export default function PublicFunnel() {
                   onClick={() => copyToClipboard(example, idx)}
                 >
                   {copiedIndex === idx ? (
-                    <span className="suggestion-copy-badge" style={{ backgroundColor: '#e6f4ea', color: '#137333' }}>✓ Copied</span>
+                    <span className="suggestion-copy-badge" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px', backgroundColor: '#e6f4ea', color: '#137333' }}>
+                      <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                      Copied
+                    </span>
                   ) : (
                     <span className="suggestion-copy-badge">Click to Copy</span>
                   )}
