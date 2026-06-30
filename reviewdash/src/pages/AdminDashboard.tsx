@@ -28,6 +28,8 @@ interface Client {
   email: string;
   google_review_link: string;
   ai_keywords: string;
+  suggestion_type?: string;
+  custom_suggestions?: string[];
   created_at: string;
 }
 
@@ -44,6 +46,8 @@ export default function AdminDashboard() {
   const [email, setEmail] = useState('');
   const [googleReviewLink, setGoogleReviewLink] = useState('');
   const [aiKeywords, setAiKeywords] = useState('');
+  const [suggestionType, setSuggestionType] = useState('ai');
+  const [customSuggestionsText, setCustomSuggestionsText] = useState('');
   const [projectId, setProjectId] = useState('');
   const [showForm, setShowForm] = useState(false);
 
@@ -105,8 +109,18 @@ export default function AdminDashboard() {
     setErrorMsg('');
     setSuccessMsg('');
 
-    if (!name || !email || !googleReviewLink || !aiKeywords || (!editingClient && !projectId)) {
+    if (!name || !email || !googleReviewLink || (!editingClient && !projectId)) {
       setErrorMsg('Please fill in all required fields.');
+      return;
+    }
+
+    if (suggestionType === 'ai' && !aiKeywords.trim()) {
+      setErrorMsg('Please provide AI suggestion keywords.');
+      return;
+    }
+
+    if (suggestionType === 'custom' && !customSuggestionsText.trim()) {
+      setErrorMsg('Please provide at least one custom suggestion.');
       return;
     }
 
@@ -116,7 +130,11 @@ export default function AdminDashboard() {
       name,
       email: email.trim(),
       google_review_link: googleReviewLink.trim(),
-      ai_keywords: aiKeywords.trim()
+      ai_keywords: suggestionType === 'ai' ? aiKeywords.trim() : '',
+      suggestion_type: suggestionType,
+      custom_suggestions: suggestionType === 'custom'
+        ? customSuggestionsText.split('\n').map(s => s.trim()).filter(Boolean)
+        : []
     };
 
     const method = editingClient ? 'PUT' : 'POST';
@@ -155,7 +173,9 @@ export default function AdminDashboard() {
     setName(client.name);
     setEmail(client.email);
     setGoogleReviewLink(client.google_review_link);
-    setAiKeywords(client.ai_keywords);
+    setAiKeywords(client.ai_keywords || '');
+    setSuggestionType(client.suggestion_type || 'ai');
+    setCustomSuggestionsText(Array.isArray(client.custom_suggestions) ? client.custom_suggestions.join('\n') : '');
     setProjectId(client.project_id);
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -191,6 +211,8 @@ export default function AdminDashboard() {
     setEmail('');
     setGoogleReviewLink('');
     setAiKeywords('');
+    setSuggestionType('ai');
+    setCustomSuggestionsText('');
     setProjectId('');
     setShowForm(false);
   };
@@ -316,20 +338,51 @@ export default function AdminDashboard() {
                 )}
               </div>
 
-              <div className="form-group" style={{ marginTop: '1.25rem' }}>
-                <label>AI Suggestion keywords (Comma-separated)</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="e.g. friendly staff, clean workshop, fast delivery, cheap pricing"
-                  required
-                  value={aiKeywords}
-                  onChange={e => setAiKeywords(e.target.value)}
-                />
-                <p style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.25rem' }}>
-                  The AI review generator will weave these keywords into customer reviews when they select 4 or 5 stars.
-                </p>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', marginTop: '1.25rem' }}>
+                <div className="form-group">
+                  <label>Review Suggestions Type</label>
+                  <select
+                    className="form-control"
+                    style={{ height: '47px' }}
+                    value={suggestionType}
+                    onChange={e => setSuggestionType(e.target.value)}
+                  >
+                    <option value="ai">🤖 Dynamic AI (Gemini Generated)</option>
+                    <option value="custom">✍️ Predefined Custom Templates</option>
+                  </select>
+                </div>
               </div>
+
+              {suggestionType === 'ai' ? (
+                <div className="form-group" style={{ marginTop: '1.25rem' }}>
+                  <label>AI Suggestion keywords (Comma-separated)</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="e.g. friendly staff, clean workshop, fast delivery, cheap pricing"
+                    value={aiKeywords}
+                    onChange={e => setAiKeywords(e.target.value)}
+                  />
+                  <p style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                    The AI review generator will weave these keywords into customer reviews when they select 4 or 5 stars.
+                  </p>
+                </div>
+              ) : (
+                <div className="form-group" style={{ marginTop: '1.25rem' }}>
+                  <label>Custom Suggestions (One review template per line)</label>
+                  <textarea
+                    className="form-control"
+                    rows={4}
+                    style={{ fontFamily: 'inherit', resize: 'vertical', padding: '0.75rem' }}
+                    placeholder="Example 1: Had an amazing experience! Extremely clean and professional.&#10;Example 2: Best service in town, highly recommended!"
+                    value={customSuggestionsText}
+                    onChange={e => setCustomSuggestionsText(e.target.value)}
+                  />
+                  <p style={{ color: '#475569', fontSize: '0.75rem', marginTop: '0.25rem' }}>
+                    Enter one or more positive reviews template variations (one per line). These will be displayed for customers to copy.
+                  </p>
+                </div>
+              )}
 
               <div className="google-btn-container" style={{ marginTop: '1.5rem', justifyContent: 'flex-start' }}>
                 <button type="submit" className="btn btn-primary">
@@ -359,13 +412,15 @@ export default function AdminDashboard() {
                     <th>Business Name</th>
                     <th>Email</th>
                     <th>Associated Project</th>
-                    <th>AI Keywords</th>
+                    <th>Review Suggestions</th>
                     <th style={{ textAlign: 'right' }}>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
                   {clients.map(client => {
                     const matchedProj = projects.find(p => p.id === client.project_id);
+                    const suggestionType = client.suggestion_type || 'ai';
+                    const customSuggestions = Array.isArray(client.custom_suggestions) ? client.custom_suggestions : [];
                     return (
                       <tr key={client.id}>
                         <td style={{ fontWeight: 600 }}>{client.name}</td>
@@ -374,16 +429,27 @@ export default function AdminDashboard() {
                           {matchedProj ? matchedProj.name : 'Unknown Project'}
                         </td>
                         <td>
-                          <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap' }}>
-                            {client.ai_keywords.split(',').map((kw, i) => (
-                              <span 
-                                key={i} 
-                                style={{ backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.7rem', padding: '0.1rem 0.3rem', borderRadius: '4px' }}
-                              >
-                                {kw.trim()}
-                              </span>
-                            ))}
-                          </div>
+                          {suggestionType === 'custom' ? (
+                            <span 
+                              style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#166534', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 500 }}
+                            >
+                              ✍️ Custom ({customSuggestions.length} templates)
+                            </span>
+                          ) : (
+                            <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
+                              <span style={{ fontSize: '0.75rem', fontWeight: 500, marginRight: '0.25rem' }}>🤖 AI:</span>
+                              {(client.ai_keywords || '').split(',').map((kw, i) => (
+                                kw.trim() && (
+                                  <span 
+                                    key={i} 
+                                    style={{ backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.7rem', padding: '0.1rem 0.3rem', borderRadius: '4px' }}
+                                  >
+                                    {kw.trim()}
+                                  </span>
+                                )
+                              ))}
+                            </div>
+                          )}
                         </td>
                         <td>
                           <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>

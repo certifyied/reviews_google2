@@ -21,6 +21,8 @@ interface ClientProfile {
   email: string;
   google_review_link: string;
   ai_keywords: string;
+  suggestion_type?: string;
+  custom_suggestions?: string[];
 }
 
 interface Review {
@@ -242,17 +244,37 @@ export default function ClientDashboard() {
               </a>
             </div>
             <div>
-              <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>AI Prompter Keywords</p>
-              <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
-                {client.ai_keywords.split(',').map((kw, i) => (
-                  <span 
-                    key={i} 
-                    style={{ backgroundColor: '#e2e8f0', color: '#475569', fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 500, border: '1px solid #cbd5e1' }}
-                  >
-                    {kw.trim()}
+              <p style={{ fontSize: '0.85rem', color: '#94a3b8' }}>Review Suggestions Style</p>
+              {client.suggestion_type === 'custom' ? (
+                <div style={{ marginTop: '0.5rem' }}>
+                  <span style={{ backgroundColor: '#f0fdf4', border: '1px solid #bbf7d0', color: '#166534', fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', fontWeight: 500 }}>
+                    ✍️ Predefined Custom Templates
                   </span>
-                ))}
-              </div>
+                  <div style={{ marginTop: '0.5rem', color: '#475569', fontSize: '0.8rem', lineHeight: '1.4' }}>
+                    {Array.isArray(client.custom_suggestions) ? client.custom_suggestions.map((s, idx) => (
+                      <div key={idx} style={{ padding: '0.25rem 0', borderBottom: idx < (client.custom_suggestions || []).length - 1 ? '1px solid #e2e8f0' : 'none' }}>
+                        "{s}"
+                      </div>
+                    )) : 'No custom suggestions configured.'}
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '0.5rem' }}>
+                    <span style={{ fontSize: '0.8rem', fontWeight: 500, color: '#475569', alignSelf: 'center' }}>🤖 AI:</span>
+                    {(client.ai_keywords || '').split(',').map((kw, i) => (
+                      kw.trim() && (
+                        <span 
+                          key={i} 
+                          style={{ backgroundColor: '#e2e8f0', color: '#475569', fontSize: '0.75rem', padding: '0.25rem 0.5rem', borderRadius: '4px', fontWeight: 500, border: '1px solid #cbd5e1' }}
+                        >
+                          {kw.trim()}
+                        </span>
+                      )
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
