@@ -8,6 +8,10 @@
     {
       "source": "/reviewdash/(.*)",
       "destination": "/reviewdash/index.html"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/clientReview/index.html"
     }
   ]
 }

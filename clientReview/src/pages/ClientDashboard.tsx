@@ -110,10 +110,17 @@ export default function ClientDashboard() {
   };
 
   const copyFunnelLink = (clientId: string) => {
-    const reviewsBase = import.meta.env.VITE_REVIEWS_URL || window.location.origin;
-    const cleanReviewsBase = reviewsBase.endsWith('/') ? reviewsBase.slice(0, -1) : reviewsBase;
-    const linkPath = window.location.pathname.includes('/clientReview') ? '/reviewdash/feedback' : '/feedback';
-    const link = `${cleanReviewsBase}${linkPath}?clientId=${clientId}`;
+    const customDomain = import.meta.env.VITE_FEEDBACK_DOMAIN;
+    const baseDomain = customDomain ? customDomain.replace(/\/$/, '') : window.location.origin;
+    
+    let linkPath = '/feedback';
+    if (window.location.pathname.includes('/clientReview')) {
+      linkPath = '/clientReview/feedback';
+    } else if (window.location.pathname.includes('/reviewdash')) {
+      linkPath = '/reviewdash/feedback';
+    }
+    
+    const link = `${baseDomain}${linkPath}?clientId=${clientId}`;
     navigator.clipboard.writeText(link).then(() => {
       setCopiedLink(true);
       setTimeout(() => setCopiedLink(false), 2000);
