@@ -53,7 +53,7 @@ export default function PublicFunnel() {
   const [searchParams] = useSearchParams();
   const clientId = searchParams.get('clientId');
   
-  const [clientInfo, setClientInfo] = useState<{ name: string; google_review_link: string; copy_mode?: string } | null>(null);
+  const [clientInfo, setClientInfo] = useState<{ name: string; google_review_link: string; copy_mode?: string; logo_url?: string } | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [reviewerName, setReviewerName] = useState('');
@@ -237,11 +237,8 @@ export default function PublicFunnel() {
   if (!clientInfo) {
     return (
       <div className="google-funnel-body">
-        <div className="google-card" style={{ textAlign: 'center', padding: '3rem' }}>
-          <div className="google-logo" style={{ justifyContent: 'center', marginBottom: '1.5rem' }}>
-            <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-          </div>
-          <p style={{ color: '#5f6368' }}>Loading secure review portal...</p>
+        <div className="google-card" style={{ textAlign: 'center', padding: '3.5rem 2rem' }}>
+          <p style={{ color: '#5f6368', fontWeight: 500, margin: 0 }}>Loading secure review portal...</p>
         </div>
       </div>
     );
@@ -251,18 +248,25 @@ export default function PublicFunnel() {
     <div className="google-funnel-body">
       <div className="google-card">
         
-        <div className="google-header">
-          <div className="google-logo-wrapper">
-            <div className="google-logo">
-              <span>G</span><span>o</span><span>o</span><span>g</span><span>l</span><span>e</span>
-            </div>
-            <span className="google-logo-sub">Reviews Portal</span>
-          </div>
+        {/* Portal Header */}
+        <div className="google-header" style={{ padding: '1.25rem 1rem', display: 'flex', justifyContent: 'center', alignItems: 'center', borderBottom: '1px solid #e2e8f0', backgroundColor: '#f8fafc', borderTopLeftRadius: '12px', borderTopRightRadius: '12px' }}>
+          {clientInfo.logo_url ? (
+            <img src={clientInfo.logo_url} alt="Logo" style={{ height: '40px', objectFit: 'contain' }} />
+          ) : (
+            <span style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a', letterSpacing: '-0.02em' }}>
+              {clientInfo.name}
+            </span>
+          )}
         </div>
 
+        {/* Client Business Context */}
         <div className="google-profile-section">
           <div className="google-avatar">
-            {clientInfo.name.charAt(0).toUpperCase()}
+            {clientInfo.logo_url ? (
+              <img src={clientInfo.logo_url} alt="Logo" style={{ width: '100%', height: '100%', borderRadius: '50%', objectFit: 'cover' }} />
+            ) : (
+              clientInfo.name.charAt(0).toUpperCase()
+            )}
           </div>
           <div className="google-profile-info">
             <span className="google-profile-name">{clientInfo.name}</span>

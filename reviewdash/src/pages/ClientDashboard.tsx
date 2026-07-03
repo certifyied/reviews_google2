@@ -24,6 +24,7 @@ interface ClientProfile {
   suggestion_type?: string;
   custom_suggestions?: string[];
   copy_mode?: string;
+  logo_url?: string;
 }
 
 interface Review {
@@ -202,9 +203,12 @@ export default function ClientDashboard() {
 
       <main className="dash-main">
         
-        <div className="dash-title-section">
+        <div className="dash-title-section" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          {client.logo_url && (
+            <img src={client.logo_url} alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #cbd5e1' }} />
+          )}
           <div>
-            <h1>{client.name} Dashboard</h1>
+            <h1 style={{ margin: 0 }}>{client.name} Dashboard</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
               Real-time analytics for your feedback funnel
             </p>

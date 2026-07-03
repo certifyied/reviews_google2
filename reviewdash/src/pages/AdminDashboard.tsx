@@ -31,6 +31,7 @@ interface Client {
   suggestion_type?: string;
   custom_suggestions?: string[];
   copy_mode?: string;
+  logo_url?: string;
   created_at: string;
 }
 
@@ -50,6 +51,8 @@ export default function AdminDashboard() {
   const [suggestionType, setSuggestionType] = useState('ai');
   const [customSuggestions, setCustomSuggestions] = useState<string[]>(['']);
   const [copyMode, setCopyMode] = useState('auto');
+  const [logoUrl, setLogoUrl] = useState('');
+  const [uploadingLogo, setUploadingLogo] = useState(false);
   const [projectId, setProjectId] = useState('');
   const [showForm, setShowForm] = useState(false);
 
@@ -137,7 +140,8 @@ export default function AdminDashboard() {
       custom_suggestions: suggestionType === 'custom'
         ? customSuggestions.map(s => s.trim()).filter(Boolean)
         : [],
-      copy_mode: copyMode
+      copy_mode: copyMode,
+      logo_url: logoUrl || null
     };
 
     const method = editingClient ? 'PUT' : 'POST';
@@ -183,6 +187,7 @@ export default function AdminDashboard() {
       : ['']
     );
     setCopyMode(client.copy_mode || 'auto');
+    setLogoUrl(client.logo_url || '');
     setProjectId(client.project_id);
     setShowForm(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -212,6 +217,38 @@ export default function AdminDashboard() {
     }
   };
 
+  const handleLogoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingLogo(true);
+    setErrorMsg('');
+    setSuccessMsg('');
+
+    const formData = new FormData();
+    formData.append('logo', file);
+
+    try {
+      const res = await apiFetch('/api/reviews/clients/upload-logo', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        body: formData
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to upload logo.');
+
+      setLogoUrl(data.logoUrl);
+      setSuccessMsg('Logo uploaded successfully.');
+    } catch (err: any) {
+      setErrorMsg(err.message || 'Logo upload failed.');
+    } finally {
+      setUploadingLogo(false);
+    }
+  };
+
   const resetForm = () => {
     setEditingClient(null);
     setName('');
@@ -221,6 +258,7 @@ export default function AdminDashboard() {
     setSuggestionType('ai');
     setCustomSuggestions(['']);
     setCopyMode('auto');
+    setLogoUrl('');
     setProjectId('');
     setShowForm(false);
   };
@@ -344,6 +382,35 @@ export default function AdminDashboard() {
                     value={googleReviewLink}
                     onChange={e => setGoogleReviewLink(e.target.value)}
                   />
+                </div>
+
+                 <div className="form-group">
+                  <label>Business Logo (Supabase Storage)</label>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginTop: '0.25rem' }}>
+                    {logoUrl ? (
+                      <img src={logoUrl} alt="Logo Preview" style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #cbd5e1' }} />
+                    ) : (
+                      <div style={{ width: '45px', height: '45px', borderRadius: '50%', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #cbd5e1', fontSize: '0.7rem', color: '#94a3b8' }}>
+                        No Logo
+                      </div>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      style={{ display: 'none' }}
+                      id="logo-upload-input"
+                      onChange={handleLogoUpload}
+                      disabled={uploadingLogo}
+                    />
+                    <label htmlFor="logo-upload-input" className="btn btn-secondary btn-small" style={{ cursor: 'pointer', margin: 0, height: '42px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      {uploadingLogo ? 'Uploading...' : 'Choose File'}
+                    </label>
+                    {logoUrl && (
+                      <button type="button" className="btn btn-danger btn-small" onClick={() => setLogoUrl('')} style={{ height: '42px', padding: '0 0.75rem' }}>
+                        Remove
+                      </button>
+                    )}
+                  </div>
                 </div>
 
                 {!editingClient && (
