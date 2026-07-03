@@ -237,11 +237,11 @@ export default function PublicFunnel() {
   }
 
   return (
-    <div className="google-funnel-body" style={{ margin: 0, padding: 0, minHeight: '100vh', display: 'flex', alignItems: 'flex-start', justifyContent: 'center', backgroundColor: '#f1f3f4', fontFamily: 'Roboto, Arial, sans-serif' }}>
-      <div className="google-card" style={{ width: '100%', maxWidth: '500px', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff', borderRadius: 0, padding: 0, boxShadow: 'none', border: 'none' }}>
+    <div className="google-funnel-body" style={{ margin: 0, padding: 0, backgroundColor: '#f1f3f4', fontFamily: 'Roboto, Arial, sans-serif' }}>
+      <div className="google-card" style={{ padding: 0, margin: '1.5rem auto' }}>
         
         {/* Header */}
-        <div style={{ display: 'flex', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #dadce0', position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', padding: '12px 16px', borderBottom: '1px solid #dadce0', position: 'sticky', top: 0, backgroundColor: '#ffffff', zIndex: 10, borderTopLeftRadius: 'inherit', borderTopRightRadius: 'inherit' }}>
           <button 
             onClick={() => window.history.back()} 
             style={{ border: 'none', background: 'none', cursor: 'pointer', padding: '8px', marginRight: '12px', display: 'flex', alignItems: 'center', color: '#5f6368' }}
@@ -258,9 +258,9 @@ export default function PublicFunnel() {
           
           {/* Profile Section */}
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#f1f3f4', border: '1px solid #dadce0', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+            <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#ffffff', border: '1px solid #dadce0', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, padding: '2px' }}>
               {clientInfo.logo_url ? (
-                <img src={clientInfo.logo_url} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={clientInfo.logo_url} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               ) : (
                 <span style={{ fontSize: '16px', fontWeight: 700, color: '#1a73e8' }}>{clientInfo.name.charAt(0).toUpperCase()}</span>
               )}

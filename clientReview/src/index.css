@@ -641,3 +641,17 @@ select.form-control {
     font-size: 2rem;
   }
 }
+
+@media (max-width: 600px) {
+  .google-funnel-body {
+    padding: 0 !important;
+    align-items: flex-start !important;
+  }
+  .google-card {
+    max-width: 100% !important;
+    min-height: 100vh !important;
+    border-radius: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
