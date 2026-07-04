@@ -18,9 +18,13 @@ export default function LandingPage() {
     return () => clearInterval(interval);
   }, []);
 
-  // Use reviewdash login path
+  // Dev: reviewdash runs on port 5180. Prod: same domain under /reviewdash/
   const goToLogin = () => {
-    window.location.href = '/reviewdash/login';
+    if (import.meta.env.DEV) {
+      window.location.href = 'http://localhost:5180/reviewdash/login';
+    } else {
+      window.location.href = '/reviewdash/login';
+    }
   };
 
   const features = [
@@ -88,9 +92,9 @@ export default function LandingPage() {
         padding: '0 24px',
       }}>
         <div style={{ maxWidth: 1120, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 64 }}>
-          {/* Logo — relative path works from /clientReview/ base */}
-          <a href="/clientReview/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <img src="/clientReview/image.png" alt="Certifyied" style={{ height: 32, objectFit: 'contain' }} />
+          {/* Logo — use relative paths, Vite base handles the prefix */}
+          <a href="./" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <img src="./image.png" alt="Certifyied" style={{ height: 32, objectFit: 'contain' }} />
             <span style={{ fontSize: 17, fontWeight: 600, color: '#202124', letterSpacing: '-0.3px' }}>
               Certifyied <span style={{ color: '#467222' }}>Reviews</span>
             </span>
@@ -157,7 +161,7 @@ export default function LandingPage() {
 
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 28 }}>
-            <img src="/clientReview/image.png" alt="Certifyied Reviews" style={{ height: 48, objectFit: 'contain' }} />
+            <img src="./image.png" alt="Certifyied Reviews" style={{ height: 48, objectFit: 'contain' }} />
             <span style={{ fontSize: 22, fontWeight: 600, color: '#202124', letterSpacing: '-0.5px' }}>Certifyied Reviews</span>
           </div>
 
@@ -396,7 +400,7 @@ export default function LandingPage() {
       <footer style={{ padding: '40px 24px', background: '#202124', color: 'rgba(255,255,255,0.6)', fontSize: 13 }}>
         <div style={{ maxWidth: 1120, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src="/clientReview/image.png" alt="Certifyied" style={{ height: 24, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
+            <img src="./image.png" alt="Certifyied" style={{ height: 24, objectFit: 'contain', filter: 'brightness(0) invert(1)', opacity: 0.7 }} />
             <span style={{ color: 'rgba(255,255,255,0.7)', fontWeight: 500 }}>Certifyied Reviews</span>
           </div>
           <div style={{ display: 'flex', gap: 24 }}>
