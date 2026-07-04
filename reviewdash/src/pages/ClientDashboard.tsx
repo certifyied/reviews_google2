@@ -321,7 +321,6 @@ export default function ClientDashboard() {
       <nav className="dash-nav">
         <div className="dash-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <img src={`${import.meta.env.BASE_URL}image.png`} alt="Certifyied Logo" style={{ height: '32px', objectFit: 'contain' }} />
-          Certifyied <span style={{ color: '#467222' }}>Reviews</span>
         </div>
         <div className="dash-nav-actions">
           {queryClientId && (

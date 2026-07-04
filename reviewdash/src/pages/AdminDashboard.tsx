@@ -301,7 +301,6 @@ export default function AdminDashboard() {
       <nav className="dash-nav">
         <div className="dash-logo" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
           <img src={`${import.meta.env.BASE_URL}image.png`} alt="Certifyied Logo" style={{ height: '32px', objectFit: 'contain' }} />
-          Certifyied <span style={{ color: '#467222' }}>Reviews</span> <span style={{ fontSize: '0.75rem', backgroundColor: '#e2e8f0', padding: '0.2rem 0.5rem', borderRadius: '4px', color: '#475569', fontWeight: 600 }}>Admin</span>
         </div>
         <div className="dash-nav-actions">
           <button className="btn btn-danger btn-small" onClick={handleLogout}>

@@ -119,9 +119,6 @@ export default function LandingPage() {
           {/* Logo */}
           <a href="/" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <img src="./image.png" alt="Certifyied" style={{ height: 32, objectFit: 'contain' }} />
-            <span style={{ fontSize: 17, fontWeight: 600, color: '#202124', letterSpacing: '-0.3px' }}>
-              Certifyied <span style={{ color: '#467222' }}>Reviews</span>
-            </span>
           </a>
 
           {/* Desktop nav */}
