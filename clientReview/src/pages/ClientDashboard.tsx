@@ -714,6 +714,25 @@ export default function ClientDashboard() {
         </div>
 
       </main>
+
+      {/* Footer */}
+      <footer style={{ borderTop: '1px solid #e8eaed', padding: '24px 32px', background: '#fff', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <img src={`${import.meta.env.BASE_URL}image.png`} alt="Logo" style={{ height: 28, objectFit: 'contain' }} />
+            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager</span>
+          </div>
+          <div style={{ display: 'flex', gap: 24 }}>
+            {['Privacy','Terms','Contact'].map(l => (
+              <a key={l} href="#" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
+                onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>{l}</a>
+            ))}
+          </div>
+          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
+        </div>
+      </footer>
+
     </div>
   );
 }

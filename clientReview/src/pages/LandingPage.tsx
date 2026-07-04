@@ -45,6 +45,25 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const goToLogin = () => navigate('/login');
 
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<'demo' | 'started'>('demo');
+  const [modalName, setModalName] = useState('');
+  const [modalEmail, setModalEmail] = useState('');
+  const [modalPhone, setModalPhone] = useState('');
+  const [modalSubmitting, setModalSubmitting] = useState(false);
+  const [modalSuccess, setModalSuccess] = useState(false);
+  const [modalError, setModalError] = useState('');
+
+  const openModal = (type: 'demo' | 'started') => {
+    setModalType(type);
+    setModalOpen(true);
+    setModalName('');
+    setModalEmail('');
+    setModalPhone('');
+    setModalSuccess(false);
+    setModalError('');
+  };
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll);
@@ -105,7 +124,7 @@ export default function LandingPage() {
               onMouseLeave={e => e.currentTarget.style.background = 'none'}>
               Sign in
             </button>
-            <Btn onClick={goToLogin}>Get started</Btn>
+            <Btn onClick={() => openModal('started')}>Get started</Btn>
             <button onClick={() => setMenuOpen(!menuOpen)} className="rm-hamburger"
               style={{ display: 'none', background: 'none', border: 'none', cursor: 'pointer', padding: 8 }}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#5f6368" strokeWidth="2">
@@ -137,8 +156,8 @@ export default function LandingPage() {
               Collect customer feedback, understand every experience and build a stronger online reputation.
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
-              <Btn onClick={goToLogin} large>Get started</Btn>
-              <Btn href="mailto:support@reviewmanager.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
+              <Btn onClick={() => openModal('started')} large>Get started</Btn>
+              <Btn onClick={() => openModal('demo')} outline large>Book a Demo</Btn>
             </div>
           </div>
 
@@ -207,7 +226,7 @@ export default function LandingPage() {
             <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>How it works</p>
             <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Everything in one place.</h2>
             <p style={{ fontSize: 17, color: '#5f6368', lineHeight: 1.7, maxWidth: 480, margin: '0 auto 36px' }}>One platform. Every customer experience. From the moment they rate to the moment you act.</p>
-            <Btn onClick={goToLogin}>Get started</Btn>
+            <Btn onClick={() => openModal('started')}>Get started</Btn>
           </div>
 
           {/* Steps grid */}
@@ -247,7 +266,7 @@ export default function LandingPage() {
           <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 14px' }}>Your customers know how they feel. Sometimes, they just don't know what to write.</p>
           <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 10px' }}>Review Manager helps customers express their genuine experience clearly and naturally.</p>
           <p style={{ fontSize: 15, fontWeight: 600, color: '#202124', margin: '0 0 32px' }}>Simple. Helpful. Human.</p>
-          <Btn onClick={goToLogin}>Get started</Btn>
+          <Btn onClick={() => openModal('started')}>Get started</Btn>
           <div style={{ background: BLUE_XLIGHT, borderRadius: 20, padding: '32px', border: '1px solid #c5d8fd', marginTop: 52, textAlign: 'left' }}>
             <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>AI-suggested review draft</p>
             <div style={{ background: '#fff', borderRadius: 12, padding: '18px', border: '1px solid #e8eaed', marginBottom: 14 }}>
@@ -274,7 +293,7 @@ export default function LandingPage() {
           <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Feedback that helps you improve.</h2>
           <p style={{ fontSize: 17, fontWeight: 600, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>Understand what your customers love—and where you can do better.</p>
           <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 32px' }}>Private feedback is organised in one simple dashboard, so your team can listen, act and improve.</p>
-          <Btn onClick={goToLogin}>Get started</Btn>
+          <Btn onClick={() => openModal('started')}>Get started</Btn>
           <div style={{ background: '#fff', borderRadius: 20, padding: '24px', border: '1px solid #e8eaed', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', marginTop: 52, textAlign: 'left' }}>
             <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 16px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Private feedback dashboard</p>
             {[{ initials: 'AM', note: 'Waiting time was a bit long but overall great experience.', stars: 3, time: '2h ago' }, { initials: 'PK', note: 'Loved the service! Will definitely come back.', stars: 5, time: '5h ago' }, { initials: 'RS', note: 'Good quality but reception could be friendlier.', stars: 3, time: 'Yesterday' }].map((item, i) => (
@@ -304,7 +323,7 @@ export default function LandingPage() {
             <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>Every industry</p>
             <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 20px', lineHeight: 1.2 }}>Built for every business.</h2>
             <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 36px' }}>If customers have an experience, Review Manager can help you understand it — whatever your industry.</p>
-            <Btn onClick={goToLogin}>Get started</Btn>
+            <Btn onClick={() => openModal('started')}>Get started</Btn>
           </div>
 
           {/* Right: industry list */}
@@ -348,8 +367,8 @@ export default function LandingPage() {
           <p style={{ fontSize: 17, fontWeight: 500, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>Customer feedback shouldn't sit unread.</p>
           <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 40px' }}>Turn every experience into an opportunity to improve your business.</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
-            <Btn onClick={goToLogin} large>Get started</Btn>
-            <Btn href="mailto:support@reviewmanager.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
+            <Btn onClick={() => openModal('started')} large>Get started</Btn>
+            <Btn onClick={() => openModal('demo')} outline large>Book a Demo</Btn>
           </div>
         </div>
       </section>
@@ -371,6 +390,114 @@ export default function LandingPage() {
           <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
         </div>
       </footer>
+
+
+      {/* Modal Dialog */}
+      {modalOpen && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.5)', padding: 20 }}>
+          <div style={{ background: '#fff', borderRadius: 16, maxWidth: 440, width: '100%', padding: '32px', boxShadow: '0 10px 40px rgba(0,0,0,0.25)', position: 'relative', boxSizing: 'border-box' }} className="rm-fade-up">
+            <button onClick={() => setModalOpen(false)} style={{ position: 'absolute', top: 20, right: 20, background: 'none', border: 'none', cursor: 'pointer', fontSize: 22, color: '#9aa0a6', lineHeight: 1 }}>&times;</button>
+            
+            {modalSuccess ? (
+              <div style={{ textAlign: 'center', padding: '20px 0' }}>
+                <div style={{ width: 56, height: 56, borderRadius: 28, background: '#e8f0fe', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px', color: BLUE, fontSize: 24, fontWeight: 'bold' }}>✓</div>
+                <h3 style={{ fontSize: 20, fontWeight: 700, margin: '0 0 10px' }}>Thank you!</h3>
+                <p style={{ fontSize: 14, color: '#5f6368', lineHeight: 1.5, margin: 0 }}>We have received your request and will get back to you shortly.</p>
+                <button onClick={() => setModalOpen(false)} style={{ marginTop: 24, fontSize: 15, fontWeight: 500, color: '#fff', background: BLUE, border: 'none', cursor: 'pointer', padding: '10px 24px', borderRadius: 100 }}>Close</button>
+              </div>
+            ) : (
+              <form onSubmit={async (e) => {
+                e.preventDefault();
+                if (!modalEmail) return;
+                setModalSubmitting(true);
+                setModalError('');
+                try {
+                  const subject = modalType === 'demo' ? 'Demo Request' : 'Get Started Request';
+                  const message = modalType === 'demo'
+                    ? 'Hello! I would like to book a demo of Review Manager.'
+                    : 'Hello! I would like to get started with Review Manager.';
+                  
+                  const res = await fetch('https://bloggfeature.certifyied.workers.dev/adminApiBlog/api/contact?projectId=1dffc64c-c703-48bc-adfc-5649f4c317b5', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      sender_name: modalName || 'Anonymous',
+                      sender_email: modalEmail,
+                      phone_number: modalPhone || '',
+                      subject,
+                      message
+                    })
+                  });
+                  if (res.ok) {
+                    setModalSuccess(true);
+                  } else {
+                    const data = await res.json();
+                    setModalError(data.error || 'Failed to submit request.');
+                  }
+                } catch (err) {
+                  setModalError('Connection error. Please try again.');
+                } finally {
+                  setModalSubmitting(false);
+                }
+              }}>
+                <h3 style={{ fontSize: 22, fontWeight: 700, margin: '0 0 8px', letterSpacing: '-0.5px' }}>
+                  {modalType === 'demo' ? 'Book a Demo' : 'Get started'}
+                </h3>
+                <p style={{ fontSize: 14, color: '#5f6368', margin: '0 0 24px', lineHeight: 1.4 }}>
+                  {modalType === 'demo' 
+                    ? 'Enter your details below and we will contact you to schedule a demo.'
+                    : 'Enter your details below to create your account and get started.'}
+                </p>
+
+                {modalError && (
+                  <div style={{ backgroundColor: '#fef2f2', color: '#ef4444', padding: '10px 14px', borderRadius: '8px', fontSize: '13px', marginBottom: '16px', border: '1px solid #fca5a5' }}>
+                    {modalError}
+                  </div>
+                )}
+
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#202124', marginBottom: 6, textAlign: 'left' }}>Name</label>
+                  <input
+                    type="text"
+                    placeholder="Your Name (Optional)"
+                    value={modalName}
+                    onChange={e => setModalName(e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', border: '1px solid #dadce0', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none' }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#202124', marginBottom: 6, textAlign: 'left' }}>Email *</label>
+                  <input
+                    type="email"
+                    required
+                    placeholder="you@company.com"
+                    value={modalEmail}
+                    onChange={e => setModalEmail(e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', border: '1px solid #dadce0', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none' }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 24 }}>
+                  <label style={{ display: 'block', fontSize: 13, fontWeight: 600, color: '#202124', marginBottom: 6, textAlign: 'left' }}>Phone number</label>
+                  <input
+                    type="tel"
+                    placeholder="+1 555-000-0000 (Optional)"
+                    value={modalPhone}
+                    onChange={e => setModalPhone(e.target.value)}
+                    style={{ width: '100%', padding: '10px 14px', border: '1px solid #dadce0', borderRadius: 8, fontSize: 14, fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none' }}
+                  />
+                </div>
+
+                <button type="submit" disabled={modalSubmitting} style={{ width: '100%', padding: '12px', background: BLUE, color: '#fff', border: 'none', borderRadius: 100, fontSize: 15, fontWeight: 600, cursor: 'pointer', transition: 'background 0.15s' }}>
+                  {modalSubmitting ? 'Submitting...' : 'Submit Request'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      )}
+
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');

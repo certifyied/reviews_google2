@@ -152,7 +152,8 @@ export default function AuthPortal() {
   };
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#f8fafc', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#f8fafc' }}>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1.5rem' }}>
       <div style={{ width: '100%', maxWidth: '400px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '2.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
@@ -193,7 +194,7 @@ export default function AuthPortal() {
             <button
               type="submit"
               className="btn btn-primary"
-              style={{ width: '100%', marginTop: '1rem', backgroundColor: '#467222', color: '#ffffff' }}
+              style={{ width: '100%', marginTop: '1rem', backgroundColor: '#1a73e8', color: '#ffffff' }}
               disabled={loading}
             >
               Get Secure Access Link
@@ -208,6 +209,25 @@ export default function AuthPortal() {
         )}
 
       </div>
+      </div>
+
+      <footer style={{ borderTop: '1px solid #e8eaed', padding: '24px 32px', background: '#fff', marginTop: 'auto', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <img src={`${import.meta.env.BASE_URL}image.png`} alt="Logo" style={{ height: 32, objectFit: 'contain' }} />
+            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager</span>
+          </div>
+          <div style={{ display: 'flex', gap: 24 }}>
+            {['Privacy','Terms','Contact'].map(l => (
+              <a key={l} href="#" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
+                onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
+                onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>{l}</a>
+            ))}
+          </div>
+          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
+        </div>
+      </footer>
+
     </div>
   );
 }
