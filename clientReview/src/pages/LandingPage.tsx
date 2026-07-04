@@ -82,9 +82,8 @@ export default function LandingPage() {
       {/* ── NAV ── */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.97)', borderBottom: '1px solid #e8eaed', boxShadow: scrolled ? '0 1px 6px rgba(0,0,0,0.08)' : 'none', transition: 'box-shadow 0.2s', padding: '0 32px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
-          <a href={import.meta.env.BASE_URL} style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
-            <img src={LOGO} alt="Review Manager" style={{ height: 28, objectFit: 'contain' }} />
-            <span style={{ fontSize: 16, fontWeight: 600, color: '#202124', letterSpacing: '-0.2px' }}>Review Manager</span>
+          <a href={import.meta.env.BASE_URL} style={{ display: 'flex', alignItems: 'center', gap: 0, textDecoration: 'none' }}>
+            <img src={LOGO} alt="Logo" style={{ height: 28, objectFit: 'contain' }} />
           </a>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <button onClick={goToLogin} className="rm-nav-signin"
@@ -130,7 +129,7 @@ export default function LandingPage() {
             </p>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
               <Btn onClick={goToLogin} large>Get started</Btn>
-              <Btn href="mailto:contact@certifyied.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
+              <Btn href="mailto:support@reviewmanager.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
             </div>
           </div>
 
@@ -322,7 +321,7 @@ export default function LandingPage() {
           <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 40px' }}>Turn every experience into an opportunity to improve your business.</p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: 12, flexWrap: 'wrap' }}>
             <Btn onClick={goToLogin} large>Get started</Btn>
-            <Btn href="mailto:contact@certifyied.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
+            <Btn href="mailto:support@reviewmanager.com?subject=Demo%20Request" outline large>Book a Demo</Btn>
           </div>
         </div>
       </section>
@@ -332,7 +331,7 @@ export default function LandingPage() {
         <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
             <img src={LOGO} alt="Review Manager" style={{ height: 22, objectFit: 'contain', opacity: 0.5 }} />
-            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager by Certifyied</span>
+            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager</span>
           </div>
           <div style={{ display: 'flex', gap: 24 }}>
             {['Privacy','Terms','Contact'].map(l => (
@@ -341,7 +340,7 @@ export default function LandingPage() {
                 onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>{l}</a>
             ))}
           </div>
-          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Certifyied</span>
+          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
         </div>
       </footer>
 

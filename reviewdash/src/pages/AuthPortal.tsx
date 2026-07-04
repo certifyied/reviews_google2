@@ -149,7 +149,7 @@ export default function AuthPortal() {
       <div style={{ width: '100%', maxWidth: '400px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '2.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <img src={`${import.meta.env.BASE_URL}image.png`} alt="Certifyied Logo" style={{ height: '48px', objectFit: 'contain' }} />
+          <img src={`${import.meta.env.BASE_URL}image.png`} alt="Logo" style={{ height: '48px', objectFit: 'contain' }} />
           <p style={{ color: '#475569', fontSize: '0.85rem', marginTop: '0.85rem' }}>
             Passwordless portal for clients and administrators
           </p>

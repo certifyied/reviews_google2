@@ -284,7 +284,7 @@ export default function PublicFunnel() {
               )}
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <span style={{ fontSize: '14px', fontWeight: 500, color: '#202124' }}>Certifyied</span>
+              <span style={{ fontSize: '14px', fontWeight: 500, color: '#202124' }}>Review Manager</span>
               <span style={{ fontSize: '12px', color: '#5f6368', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                 Posting publicly across Google 
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="#5f6368"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
