@@ -103,9 +103,19 @@ export default function LandingPage() {
       {/* ── NAV ── */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100, background: 'rgba(255,255,255,0.97)', borderBottom: '1px solid #e8eaed', boxShadow: scrolled ? '0 1px 6px rgba(0,0,0,0.08)' : 'none', transition: 'box-shadow 0.2s', padding: '0 32px' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
-          <a href={import.meta.env.BASE_URL} style={{ display: 'flex', alignItems: 'center', gap: 0, textDecoration: 'none' }}>
+                    <a href={import.meta.env.BASE_URL} style={{ display: 'flex', alignItems: 'center', gap: 0, textDecoration: 'none', flexShrink: 0 }}>
             <img src={LOGO} alt="Logo" style={{ height: 38, objectFit: 'contain' }} />
           </a>
+          
+          {/* Middle Navigation Links */}
+          <div className="rm-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 24 }}>
+            <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>How it works</a>
+            <a href="#faq" style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>FAQ</a>
+            <a href="#blog" style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>Blog</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); openModal('demo'); }} style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>Contact</a>
+            <a href="#" style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>Privacy Policy</a>
+            <a href="#" style={{ fontSize: 14, fontWeight: 500, color: '#5f6368', textDecoration: 'none', transition: 'color 0.15s' }} onMouseEnter={e => e.currentTarget.style.color = BLUE} onMouseLeave={e => e.currentTarget.style.color = '#5f6368'}>Terms</a>
+          </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <Btn onClick={goToLogin}>Login</Btn>
             <button onClick={() => setMenuOpen(!menuOpen)} className="rm-hamburger"
@@ -116,10 +126,16 @@ export default function LandingPage() {
             </button>
           </div>
         </div>
-        {menuOpen && (
-          <div style={{ borderTop: '1px solid #e8eaed', padding: '16px 20px 24px' }}>
+                {menuOpen && (
+          <div style={{ borderTop: '1px solid #e8eaed', padding: '16px 20px 24px', display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <a href="#how-it-works" onClick={() => setMenuOpen(false)} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>How it works</a>
+            <a href="#faq" onClick={() => setMenuOpen(false)} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>FAQ</a>
+            <a href="#blog" onClick={() => setMenuOpen(false)} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>Blog</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false); openModal('demo'); }} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>Contact</a>
+            <a href="#" onClick={() => setMenuOpen(false)} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>Privacy Policy</a>
+            <a href="#" onClick={() => setMenuOpen(false)} style={{ fontSize: 15, fontWeight: 500, color: '#202124', textDecoration: 'none' }}>Terms</a>
             <button onClick={() => { goToLogin(); setMenuOpen(false); }}
-              style={{ width: '100%', fontSize: 15, fontWeight: 600, color: '#fff', background: BLUE, border: 'none', cursor: 'pointer', padding: '13px', borderRadius: 100 }}>
+              style={{ width: '100%', fontSize: 15, fontWeight: 600, color: '#fff', background: BLUE, border: 'none', cursor: 'pointer', padding: '13px', borderRadius: 100, marginTop: 8 }}>
               Login
             </button>
           </div>
@@ -724,6 +740,10 @@ export default function LandingPage() {
             grid-template-columns: 1fr !important;
             gap: 32px !important;
           }
+        }
+
+        @media (max-width: 860px) {
+          .rm-nav-links { display: none !important; }
         }
 
         /* ─── Tablet / Mobile ─── */
