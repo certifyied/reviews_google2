@@ -418,60 +418,68 @@ export default function LandingPage() {
 
       {/* ── SECTION: Make reviewing easier ── */}
       <section style={{ padding: '88px 32px' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>For your customers</p>
-          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Make reviewing easier.</h2>
-          <p style={{ fontSize: 17, fontWeight: 600, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>A little help finding the right words.</p>
-          <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 14px' }}>Your customers know how they feel. Sometimes, they just don't know what to write.</p>
-          <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 10px' }}>Review Manager helps customers express their genuine experience clearly and naturally.</p>
-          <p style={{ fontSize: 15, fontWeight: 600, color: '#202124', margin: '0 0 32px' }}>Simple. Helpful. Human.</p>
-          <Btn onClick={() => openModal('started')}>Get started</Btn>
-          <div style={{ background: BLUE_XLIGHT, borderRadius: 20, padding: '32px', border: '1px solid #c5d8fd', marginTop: 52, textAlign: 'left' }}>
-            <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>AI-suggested review draft</p>
-            <div style={{ background: '#fff', borderRadius: 12, padding: '18px', border: '1px solid #e8eaed', marginBottom: 14 }}>
-              <p style={{ fontSize: 14, color: '#3c4043', lineHeight: 1.7, margin: 0 }}>"Excellent service from start to finish. The team was professional, friendly and went above and beyond to help me. Highly recommend to anyone looking for quality and care."</p>
-            </div>
-            <div style={{ display: 'flex', gap: 8, marginBottom: 18, flexWrap: 'wrap' }}>
-              {['Use this', 'Try another', 'Edit'].map((label, i) => (
-                <div key={i} style={{ padding: '7px 14px', borderRadius: 100, fontSize: 13, fontWeight: 500, background: i === 0 ? BLUE : '#f1f3f4', color: i === 0 ? '#fff' : '#5f6368' }}>{label}</div>
-              ))}
-            </div>
-            <div style={{ display: 'flex', gap: 5 }}>
-              {[1, 2, 3, 4, 5].map(s => <svg key={s} width="26" height="26" viewBox="0 0 24 24" fill="#fbbc05"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>)}
+        <div className="rm-split-grid" style={{ maxWidth: 1080, margin: '0 auto' }}>
+          {/* Left: Text */}
+          <div className="rm-split-text" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>For your customers</p>
+            <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Make reviewing easier.</h2>
+            <p style={{ fontSize: 17, fontWeight: 600, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>A little help finding the right words.</p>
+            <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 14px' }}>Your customers know how they feel. Sometimes, they just don't know what to write.</p>
+            <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 10px' }}>Review Manager helps customers express their genuine experience clearly and naturally.</p>
+            <p style={{ fontSize: 15, fontWeight: 600, color: '#202124', margin: '0 0 32px' }}>Simple. Helpful. Human.</p>
+            <Btn onClick={() => openModal('started')}>Get started</Btn>
+          </div>
+          {/* Right: Visual */}
+          <div className="rm-split-visual" style={{ width: '100%' }}>
+            <div style={{ background: BLUE_XLIGHT, borderRadius: 20, padding: '32px', border: '1px solid #c5d8fd', textAlign: 'left' }}>
+              <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 14px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>AI-suggested review draft</p>
+              <div style={{ background: '#fff', borderRadius: 12, padding: '18px', border: '1px solid #e8eaed', marginBottom: 14 }}>
+                <p style={{ fontSize: 14, color: '#3c4043', lineHeight: 1.7, margin: 0 }}>"Excellent service from start to finish. The team was professional, friendly and went above and beyond to help me. Highly recommend to anyone looking for quality and care."</p>
+              </div>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 18, flexWrap: 'wrap' }}>
+                {['Use this', 'Try another', 'Edit'].map((label, i) => (
+                  <div key={i} style={{ padding: '7px 14px', borderRadius: 100, fontSize: 13, fontWeight: 500, background: i === 0 ? BLUE : '#f1f3f4', color: i === 0 ? '#fff' : '#5f6368' }}>{label}</div>
+                ))}
+              </div>
+              <div style={{ display: 'flex', gap: 5 }}>
+                {[1, 2, 3, 4, 5].map(s => <svg key={s} width="26" height="26" viewBox="0 0 24 24" fill="#fbbc05"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>)}
+              </div>
             </div>
           </div>
         </div>
-      </section>
-
-      <div style={{ height: 1, background: '#e8eaed', maxWidth: 1080, margin: '0 auto' }} />
+      </section><div style={{ height: 1, background: '#e8eaed', maxWidth: 1080, margin: '0 auto' }} />
 
       {/* ── SECTION: Feedback that helps you improve ── */}
       <section style={{ padding: '88px 32px', background: '#f8f9fa' }}>
-        <div style={{ maxWidth: 760, margin: '0 auto', textAlign: 'center' }}>
-          <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>For your team</p>
-          <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Feedback that helps you improve.</h2>
-          <p style={{ fontSize: 17, fontWeight: 600, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>Understand what your customers love—and where you can do better.</p>
-          <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 32px' }}>Private feedback is organised in one simple dashboard, so your team can listen, act and improve.</p>
-          <Btn onClick={() => openModal('started')}>Get started</Btn>
-          <div style={{ background: '#fff', borderRadius: 20, padding: '24px', border: '1px solid #e8eaed', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', marginTop: 52, textAlign: 'left' }}>
-            <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 16px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Private feedback dashboard</p>
-            {[{ initials: 'AM', note: 'Waiting time was a bit long but overall great experience.', stars: 3, time: '2h ago' }, { initials: 'PK', note: 'Loved the service! Will definitely come back.', stars: 5, time: '5h ago' }, { initials: 'RS', note: 'Good quality but reception could be friendlier.', stars: 3, time: 'Yesterday' }].map((item, i) => (
-              <div key={i} style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: i < 2 ? '1px solid #f1f3f4' : 'none' }}>
-                <div style={{ width: 34, height: 34, borderRadius: 17, background: BLUE_LIGHT, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: BLUE, flexShrink: 0 }}>{item.initials}</div>
-                <div style={{ flex: 1 }}>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                    <span style={{ fontSize: 13, color: '#fbbc05' }}>{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</span>
-                    <span style={{ fontSize: 12, color: '#bdc1c6' }}>{item.time}</span>
+        <div className="rm-split-grid" style={{ maxWidth: 1080, margin: '0 auto' }}>
+          {/* Left: Private Dashboard Visual */}
+          <div className="rm-split-visual rm-split-left" style={{ width: '100%' }}>
+            <div style={{ background: '#fff', borderRadius: 20, padding: '24px', border: '1px solid #e8eaed', boxShadow: '0 4px 24px rgba(0,0,0,0.06)', textAlign: 'left' }}>
+              <p style={{ fontSize: 12, color: '#9aa0a6', margin: '0 0 16px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1 }}>Private feedback dashboard</p>
+              {[{ initials: 'AM', note: 'Waiting time was a bit long but overall great experience.', stars: 3, time: '2h ago' }, { initials: 'PK', note: 'Loved the service! Will definitely come back.', stars: 5, time: '5h ago' }, { initials: 'RS', note: 'Good quality but reception could be friendlier.', stars: 3, time: 'Yesterday' }].map((item, i) => (
+                <div key={i} style={{ display: 'flex', gap: 12, padding: '12px 0', borderBottom: i < 2 ? '1px solid #f1f3f4' : 'none' }}>
+                  <div style={{ width: 34, height: 34, borderRadius: 17, background: BLUE_LIGHT, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: BLUE, flexShrink: 0 }}>{item.initials}</div>
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                      <span style={{ fontSize: 13, color: '#fbbc05' }}>{'★'.repeat(item.stars)}{'☆'.repeat(5 - item.stars)}</span>
+                      <span style={{ fontSize: 12, color: '#bdc1c6' }}>{item.time}</span>
+                    </div>
+                    <p style={{ margin: 0, fontSize: 13, color: '#5f6368', lineHeight: 1.5 }}>{item.note}</p>
                   </div>
-                  <p style={{ margin: 0, fontSize: 13, color: '#5f6368', lineHeight: 1.5 }}>{item.note}</p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+          {/* Right: Text */}
+          <div className="rm-split-text rm-split-right" style={{ textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+            <p style={{ fontSize: 13, fontWeight: 600, color: BLUE, textTransform: 'uppercase', letterSpacing: 2, margin: '0 0 14px' }}>For your team</p>
+            <h2 style={{ fontSize: 'clamp(26px, 3.5vw, 40px)', fontWeight: 700, letterSpacing: '-1px', color: '#202124', margin: '0 0 16px', lineHeight: 1.2 }}>Feedback that helps you improve.</h2>
+            <p style={{ fontSize: 17, fontWeight: 600, color: '#3c4043', margin: '0 0 14px', lineHeight: 1.5 }}>Understand what your customers love—and where you can do better.</p>
+            <p style={{ fontSize: 16, color: '#5f6368', lineHeight: 1.75, margin: '0 0 32px' }}>Private feedback is organised in one simple dashboard, so your team can listen, act and improve.</p>
+            <Btn onClick={() => openModal('started')}>Get started</Btn>
           </div>
         </div>
-      </section>
-
-      <div style={{ height: 1, background: '#e8eaed', maxWidth: 1080, margin: '0 auto' }} />
+      </section><div style={{ height: 1, background: '#e8eaed', maxWidth: 1080, margin: '0 auto' }} />
 
       {/* ── SECTION: Built for every business ── */}
       <section style={{ padding: '88px 32px' }}>
