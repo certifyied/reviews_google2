@@ -203,7 +203,7 @@ export default function IndustryPage() {
             </p>
             <div style={{ display: 'flex', gap: 12 }}>
               <Btn onClick={openModal} large>{data.ctaText}</Btn>
-              <Btn onClick={() => navigate(import.meta.env.BASE_URL)} outline large>Explore All Features</Btn>
+              <Btn onClick={() => navigate('/')} outline large>Explore All Features</Btn>
             </div>
           </div>
 

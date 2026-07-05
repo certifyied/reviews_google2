@@ -200,16 +200,19 @@ export default function LandingPage() {
                 ))}
               </div>
             </div>
-            {/* Floating badges — hidden on mobile via CSS */}
-            <div className="rm-badge rm-float" style={{ position: 'absolute', bottom: -14, left: -18, background: '#fff', borderRadius: 10, padding: '9px 13px', border: '1px solid #e8eaed', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: 9 }}>
-              <div style={{ width: 30, height: 30, borderRadius: 15, background: BLUE_LIGHT, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill={BLUE}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+            {/* Floating badges — safely positioned inside the layout boundary */}
+            <div className="rm-badge rm-float" style={{ position: 'absolute', bottom: 12, left: 12, background: '#fff', borderRadius: 8, padding: '6px 10px', border: '1px solid #e8eaed', boxShadow: '0 4px 12px rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', gap: 8, zIndex: 10 }}>
+              <div style={{ width: 24, height: 24, borderRadius: 12, background: BLUE_LIGHT, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                <svg width="11" height="11" viewBox="0 0 24 24" fill={BLUE}><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
               </div>
-              <div><p style={{ margin: 0, fontSize: 12, fontWeight: 700, color: '#202124' }}>4.8 avg rating</p><p style={{ margin: 0, fontSize: 10, color: '#9aa0a6' }}>+0.4 this month</p></div>
+              <div>
+                <p style={{ margin: 0, fontSize: 11, fontWeight: 700, color: '#202124', lineHeight: 1.1 }}>4.8 Rating</p>
+                <p style={{ margin: 0, fontSize: 9, color: '#9aa0a6' }}>+0.4 this month</p>
+              </div>
             </div>
-            <div className="rm-badge" style={{ position: 'absolute', top: -13, right: -14, background: '#fff', borderRadius: 9, padding: '8px 12px', border: '1px solid #e8eaed', boxShadow: '0 4px 20px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: 7 }}>
-              <div style={{ width: 7, height: 7, borderRadius: 4, background: '#34a853', animation: 'rm-pulse 2s infinite' }} />
-              <p style={{ margin: 0, fontSize: 11, fontWeight: 600, color: '#202124' }}>New review on Google</p>
+            <div className="rm-badge" style={{ position: 'absolute', top: 8, right: 12, background: '#fff', borderRadius: 9, padding: '4px 10px', border: '1px solid #e8eaed', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', display: 'flex', alignItems: 'center', gap: 6, zIndex: 10 }}>
+              <div style={{ width: 6, height: 6, borderRadius: 3, background: '#34a853', animation: 'rm-pulse 2s infinite' }} />
+              <p style={{ margin: 0, fontSize: 10, fontWeight: 600, color: '#202124' }}>New Google review</p>
             </div>
           </div>
         </div>
@@ -500,7 +503,7 @@ export default function LandingPage() {
               return (
                 <div 
                   key={i} 
-                  onClick={() => navigate(import.meta.env.BASE_URL + 'industry/' + id)}
+                  onClick={() => navigate('/industry/' + id)}
                   style={{ padding: '16px 0', borderBottom: i < industries.length - 1 ? '1px solid #e8eaed' : 'none', display: 'flex', alignItems: 'center', justifyContent: 'space-between', transition: 'padding-left 0.2s', cursor: 'pointer' }}
                   onMouseEnter={e => e.currentTarget.style.paddingLeft = '8px'}
                   onMouseLeave={e => e.currentTarget.style.paddingLeft = '0'}
@@ -734,6 +737,23 @@ export default function LandingPage() {
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap');
 
+        /* ─── Hero Desktop Grid Styles ─── */
+        .rm-hero-grid {
+          display: grid;
+          grid-template-columns: 1.10fr 0.90fr;
+          gap: 56px;
+          align-items: center;
+        }
+        .rm-hero-text {
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .rm-hero-buttons {
+          justify-content: flex-start;
+        }
+
         @keyframes rm-pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.3)} }
         @keyframes rm-fade-up { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
         @keyframes rm-fade-right { from{opacity:0;transform:translateX(32px)} to{opacity:1;transform:translateX(0)} }
@@ -741,6 +761,33 @@ export default function LandingPage() {
         .rm-fade-up { animation: rm-fade-up 0.7s cubic-bezier(.22,.68,0,1.2) both; }
         .rm-fade-in-right { animation: rm-fade-right 0.8s 0.2s cubic-bezier(.22,.68,0,1.2) both; }
         .rm-float { animation: rm-float 3.5s ease-in-out infinite; }
+
+        /* ─── Split Sections Styles ─── */
+        .rm-split-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 72px;
+          align-items: center;
+        }
+        .rm-split-text {
+          text-align: left;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        @media (max-width: 860px) {
+          .rm-split-grid {
+            grid-template-columns: 1fr !important;
+            gap: 48px !important;
+          }
+          .rm-split-text {
+            text-align: center !important;
+            align-items: center !important;
+          }
+          .rm-split-right {
+            order: -1 !important;
+          }
+        }
 
         /* ─── Interactive Flow Mobile Stacking ─── */
         @media (max-width: 860px) {
