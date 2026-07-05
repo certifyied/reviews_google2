@@ -15,15 +15,6 @@ function decodeJwtPayload(token: string): Record<string, unknown> | null {
   }
 }
 
-/**
- * SmartRoot: sits at "/" and "/index.html" of clientReview.
- *
- * Routing logic for incoming magic_token / clientId:
- *  - magic_token with isClientPortal=true  → /login?magic_token=...  (AuthPortal verifies & goes to dashboard)
- *  - magic_token with isClientPortal=false → /feedback?magic_token=... (public review funnel)
- *  - plain clientId                        → /feedback?clientId=...   (public review funnel)
- *  - no params                             → LandingPage
- */
 export default function SmartRoot() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
