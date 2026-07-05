@@ -415,7 +415,7 @@ export default function ClientDashboard() {
         
         <div className="dash-title-section" style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           {client.logo_url && (
-            <img src={client.logo_url} alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #cbd5e1' }} />
+            <img src={client.logo_url} alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'contain', background: '#fff', padding: '2px', border: '1px solid #cbd5e1' }} />
           )}
           <div>
             <h1 style={{ margin: 0 }}>{client.name} Dashboard</h1>
@@ -519,7 +519,7 @@ export default function ClientDashboard() {
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, marginBottom: '0.5rem', color: '#475569' }}>Business Logo (Supabase Storage)</label>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     {logoUrl ? (
-                      <img src={logoUrl} alt="Logo Preview" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', border: '1px solid #cbd5e1' }} />
+                      <img src={logoUrl} alt="Logo Preview" style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'contain', background: '#fff', padding: '2px', border: '1px solid #cbd5e1' }} />
                     ) : (
                       <div style={{ width: '40px', height: '40px', borderRadius: '50%', backgroundColor: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #cbd5e1', fontSize: '0.7rem', color: '#94a3b8' }}>
                         No Logo
