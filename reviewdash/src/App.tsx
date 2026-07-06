@@ -8,6 +8,8 @@ import BlogPage from './pages/BlogPage';
 import IndustryPage from './pages/IndustryPage';
 import ShortLinkRedirect from './pages/ShortLinkRedirect';
 import SmartRoot from './SmartRoot';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 const basename = window.location.pathname.startsWith('/reviewdash') ? '/reviewdash' : '';
 
@@ -60,6 +62,10 @@ function App() {
         {/* Blog & industry pages — certifyied.com only */}
         <Route path="/blog" element={<CertifyiedOnlyRoute element={<BlogPage />} />} />
         <Route path="/industry/:industryId" element={<CertifyiedOnlyRoute element={<IndustryPage />} />} />
+
+        {/* Privacy Policy & Terms of Service — publicly accessible on all domains */}
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
 
         {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" replace />} />

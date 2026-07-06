@@ -7,6 +7,8 @@ import SmartRoot from './SmartRoot';
 import BlogPage from './pages/BlogPage';
 import IndustryPage from './pages/IndustryPage';
 import ShortLinkRedirect from './pages/ShortLinkRedirect';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 const basename = window.location.pathname.startsWith('/clientReview') ? '/clientReview' : '';
 
@@ -32,6 +34,9 @@ function App() {
         <Route path="/blog" element={<BlogPage />} />
         <Route path="/industry/:industryId" element={<IndustryPage />} />
         <Route path="/s/:slug" element={<ShortLinkRedirect />} />
+
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
 
         {/* Fallback to landing */}
         <Route path="*" element={<LandingPage />} />

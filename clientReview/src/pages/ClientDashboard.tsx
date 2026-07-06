@@ -810,11 +810,15 @@ export default function ClientDashboard() {
             <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager</span>
           </div>
           <div style={{ display: 'flex', gap: 24 }}>
-            {['Privacy','Terms','Contact'].map(l => (
-              <a key={l} href="#" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
-                onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
-                onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>{l}</a>
-            ))}
+            <a href="/privacy" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
+              onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>Privacy</a>
+            <a href="/terms" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
+              onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>Terms</a>
+            <a href="#" style={{ fontSize: 13, color: '#9aa0a6', textDecoration: 'none' }}
+              onMouseEnter={e => e.currentTarget.style.color = '#5f6368'}
+              onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>Contact</a>
           </div>
           <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
         </div>
