@@ -78,6 +78,8 @@ export default function ClientDashboard() {
   const [copyMode, setCopyMode] = useState('auto');
   const [logoUrl, setLogoUrl] = useState('');
   const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [clientName, setClientName] = useState('');
+  const [clientEmail, setClientEmail] = useState('');
 
   const [slugs, setSlugs] = useState<string[]>([]);
   const [newSlug, setNewSlug] = useState('');
@@ -133,6 +135,8 @@ export default function ClientDashboard() {
           );
           setCopyMode(dashData.client.copy_mode || 'auto');
           setLogoUrl(dashData.client.logo_url || '');
+          setClientName(dashData.client.name || '');
+          setClientEmail(dashData.client.email || '');
         }
 
         // Fetch client slugs
@@ -246,6 +250,8 @@ export default function ClientDashboard() {
 
     const payload = {
       id: activeClientId,
+      name: clientName.trim(),
+      email: clientEmail.trim().toLowerCase(),
       google_review_link: googleReviewLink.trim(),
       ai_keywords: suggestionType === 'ai' ? aiKeywords.trim() : '',
       suggestion_type: suggestionType,
@@ -275,6 +281,8 @@ export default function ClientDashboard() {
           ...data,
           client: {
             ...data.client,
+            name: payload.name,
+            email: payload.email,
             google_review_link: payload.google_review_link,
             ai_keywords: payload.ai_keywords,
             suggestion_type: payload.suggestion_type,
@@ -414,7 +422,7 @@ export default function ClientDashboard() {
               ← Back to Admin
             </button>
           )}
-          <span className="dash-user-email">{client.email}</span>
+          <span className="dash-user-email">{clientEmail || client.email}</span>
           <button className="btn btn-danger btn-small" onClick={handleLogout}>
             Logout
           </button>
@@ -428,7 +436,7 @@ export default function ClientDashboard() {
             <img src={client.logo_url} alt="Logo" style={{ width: '48px', height: '48px', borderRadius: '50%', objectFit: 'contain', background: '#fff', padding: '2px', border: '1px solid #cbd5e1' }} />
           )}
           <div>
-            <h1 style={{ margin: 0 }}>{client.name} Dashboard</h1>
+            <h1 style={{ margin: 0 }}>{clientName || client.name} Dashboard</h1>
             <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', marginTop: '0.25rem' }}>
               Real-time analytics for your feedback funnel
             </p>
@@ -511,6 +519,32 @@ export default function ClientDashboard() {
 
           {isEditing ? (
             <form onSubmit={handleSaveConfig} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                <div className="form-group">
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, marginBottom: '0.5rem', color: '#475569' }}>Business Name</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    required
+                    value={clientName}
+                    onChange={e => setClientName(e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                  />
+                </div>
+
+                <div className="form-group">
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, marginBottom: '0.5rem', color: '#475569' }}>Notification Email Address</label>
+                  <input
+                    type="email"
+                    className="form-control"
+                    required
+                    value={clientEmail}
+                    onChange={e => setClientEmail(e.target.value)}
+                    style={{ width: '100%', padding: '10px 12px', borderRadius: '6px', border: '1px solid #cbd5e1' }}
+                  />
+                </div>
+              </div>
+
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                 <div className="form-group">
                   <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 500, marginBottom: '0.5rem', color: '#475569' }}>Google Business Review URL</label>
@@ -639,6 +673,8 @@ export default function ClientDashboard() {
                 <button type="button" className="btn btn-secondary" style={{ padding: '0.6rem 1.5rem' }} onClick={() => {
                   setIsEditing(false);
                   // Restore initial values
+                  setClientName(client.name || '');
+                  setClientEmail(client.email || '');
                   setGoogleReviewLink(client.google_review_link || '');
                   setAiKeywords(client.ai_keywords || '');
                   setSuggestionType(client.suggestion_type || 'ai');
