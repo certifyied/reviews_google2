@@ -45,7 +45,14 @@ export default function AuthPortal() {
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [successMsg, setSuccessMsg] = useState('');
-  
+
+  // Dynamic branding: show "Certifyied" when accessed from certifyied.com
+  const isCertifyied = window.location.hostname.includes('certifyied.com');
+  const brandName = isCertifyied ? 'Certifyied' : 'Review Manager';
+  const brandSubtitle = isCertifyied
+    ? 'Passwordless portal for Certifyied clients and administrators'
+    : 'Passwordless portal for clients and administrators';
+
   const navigate = useNavigate();
 
   // Handle URL Magic Token Login & Auto-login checks on mount
@@ -150,9 +157,9 @@ export default function AuthPortal() {
       <div style={{ width: '100%', maxWidth: '400px', backgroundColor: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '2.5rem', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03)' }}>
         
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <img src={`${import.meta.env.BASE_URL}image.png`} alt="Logo" style={{ height: '48px', objectFit: 'contain' }} />
+          <img src={`${import.meta.env.BASE_URL}image.png`} alt={brandName} style={{ height: '48px', objectFit: 'contain' }} />
           <p style={{ color: '#475569', fontSize: '0.85rem', marginTop: '0.85rem' }}>
-            Passwordless portal for clients and administrators
+            {brandSubtitle}
           </p>
         </div>
 
@@ -207,8 +214,8 @@ export default function AuthPortal() {
       <footer style={{ borderTop: '1px solid #e8eaed', padding: '24px 32px', background: '#fff', marginTop: 'auto', boxSizing: 'border-box' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            <img src={`${import.meta.env.BASE_URL}image.png`} alt="Logo" style={{ height: 32, objectFit: 'contain' }} />
-            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>Review Manager</span>
+            <img src={`${import.meta.env.BASE_URL}image.png`} alt={brandName} style={{ height: 32, objectFit: 'contain' }} />
+            <span style={{ fontSize: 13, color: '#9aa0a6', fontWeight: 500 }}>{brandName}</span>
           </div>
           <div style={{ display: 'flex', gap: 24 }}>
             {['Privacy','Terms','Contact'].map(l => (
@@ -217,7 +224,7 @@ export default function AuthPortal() {
                 onMouseLeave={e => e.currentTarget.style.color = '#9aa0a6'}>{l}</a>
             ))}
           </div>
-          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 Review Manager</span>
+          <span style={{ fontSize: 13, color: '#bdc1c6' }}>© 2026 {brandName}</span>
         </div>
       </footer>
 
