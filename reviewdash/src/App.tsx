@@ -46,6 +46,7 @@ function App() {
 
         {/* Auth — always needed so magic-link emails work on all domains */}
         <Route path="/login" element={<AuthPortal />} />
+        <Route path="/certlogin" element={<AuthPortal />} />
 
         {/* Short-link redirector — always needed so /s/slug works on reviewmanager.in */}
         <Route path="/s/:slug" element={<ShortLinkRedirect />} />

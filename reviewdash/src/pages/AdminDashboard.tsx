@@ -159,18 +159,22 @@ export default function AdminDashboard() {
 
   const loadMonitoringData = async () => {
     setMonitoringLoading(true);
+    console.log("[Monitoring] Fetching system statistics...");
     try {
       const res = await apiFetch('/api/reviews/admin/monitoring', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
+      console.log("[Monitoring] Response status:", res.status);
       if (res.ok) {
         const data = await res.json();
+        console.log("[Monitoring] Data received successfully:", data);
         setMonitoringData(data);
       } else {
-        console.error("Failed to load monitoring data");
+        const errText = await res.text();
+        console.error("[Monitoring] Failed to load monitoring data:", res.status, errText);
       }
     } catch (e) {
-      console.error("Monitoring fetch error:", e);
+      console.error("[Monitoring] Fetch error:", e);
     } finally {
       setMonitoringLoading(false);
     }
