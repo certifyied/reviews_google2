@@ -129,6 +129,19 @@ export default function AdminDashboard() {
         const clientData = await clientRes.json();
         setClients(clientData || []);
 
+        // Also fetch monitoring logs for AI Credits
+        try {
+          const res = await apiFetch('/api/reviews/admin/monitoring', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            setMonitoringData(data);
+          }
+        } catch (monErr) {
+          console.warn("Failed to load monitoring logs:", monErr);
+        }
+
       } catch (err: any) {
         if (err.message === 'session_expired') {
           localStorage.removeItem('review_auth_token');
@@ -429,11 +442,29 @@ export default function AdminDashboard() {
             </p>
           </div>
           
-          {activeTab === 'clients' && !showForm && (
-            <button className="btn btn-primary" onClick={() => setShowForm(true)}>
-              + Add Client Profile
-            </button>
-          )}
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              backgroundColor: '#eff6ff',
+              border: '1px solid #bfdbfe',
+              color: '#1d4ed8',
+              fontSize: '0.85rem',
+              fontWeight: 600,
+              padding: '0.5rem 1rem',
+              borderRadius: '8px',
+              userSelect: 'none'
+            }}>
+              <svg style={{ width: '16px', height: '16px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M21 18v1c0 1.1-.9 2-2 2H5c-1.11 0-2-.9-2-2V5c0-1.1.89-2 2-2h14c1.1 0 2 .9 2 2v1h-9c-1.11 0-2 .9-2 2v8c0 1.1.89 2 2 2h9zm-9-2h10V8H12v8zm4-2.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+              <span>AI Credits: {Math.max(0, 10000 - (monitoringData?.aiCallsCount || 0))} / 10,000</span>
+            </div>
+            {activeTab === 'clients' && !showForm && (
+              <button className="btn btn-primary" onClick={() => setShowForm(true)}>
+                + Add Client Profile
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Navigation Tabs */}
