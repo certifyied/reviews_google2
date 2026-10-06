@@ -32,6 +32,8 @@ interface Client {
   custom_suggestions?: string[];
   copy_mode?: string;
   logo_url?: string;
+  google_account_id?: string;
+  google_location_id?: string;
   created_at: string;
 }
 
@@ -71,6 +73,14 @@ export default function AdminDashboard() {
   const [newProjUrl, setNewProjUrl] = useState('');
   const [newProjEmail, setNewProjEmail] = useState('');
   const [projLoading, setProjLoading] = useState(false);
+  const [expandedKeywords, setExpandedKeywords] = useState<Record<string, boolean>>({});
+
+  const toggleKeywords = (clientId: string) => {
+    setExpandedKeywords(prev => ({
+      ...prev,
+      [clientId]: !prev[clientId]
+    }));
+  };
   const [projError, setProjError] = useState('');
 
   const navigate = useNavigate();
@@ -242,7 +252,7 @@ export default function AdminDashboard() {
     setErrorMsg('');
     setSuccessMsg('');
 
-    if (!name || !email || !googleReviewLink || (!editingClient && !projectId)) {
+    if (!name || !email || !googleReviewLink) {
       setErrorMsg('Please fill in all required fields.');
       return;
     }
@@ -257,9 +267,44 @@ export default function AdminDashboard() {
       return;
     }
 
+    let finalProjectId = projectId;
+
+    if (!editingClient && !finalProjectId) {
+      // Auto-create parent project under the hood if not specified
+      try {
+        const projRes = await apiFetch('/api/projects', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: name.trim(),
+            url: googleReviewLink.trim(),
+            contact_email: email.trim()
+          })
+        });
+
+        const projData = await projRes.json();
+        if (!projRes.ok) throw new Error(projData.error || 'Failed to auto-create parent project.');
+        
+        finalProjectId = projData.id;
+        
+        // Refresh project list in local state
+        const loadProjRes = await apiFetch('/api/projects', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const loadProjData = await loadProjRes.json();
+        setProjects(loadProjData.projects || []);
+      } catch (projErr: any) {
+        setErrorMsg(`Failed to auto-create parent project: ${projErr.message}`);
+        return;
+      }
+    }
+
     const payload = {
       id: editingClient?.id,
-      project_id: projectId,
+      project_id: finalProjectId,
       name,
       email: email.trim(),
       google_review_link: googleReviewLink.trim(),
@@ -583,7 +628,6 @@ export default function AdminDashboard() {
                       <select
                         className="form-control"
                         style={{ height: '47px', flex: 1 }}
-                        required
                         value={projectId}
                         onChange={e => setProjectId(e.target.value)}
                       >
@@ -747,26 +791,90 @@ export default function AdminDashboard() {
                             >
                               <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg> Custom ({customSuggestions.length} templates)
                             </span>
-                          ) : (
-                            <div style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', alignItems: 'center' }}>
-                              <span style={{ fontSize: '0.75rem', fontWeight: 500, marginRight: '0.25rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                                <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M19 8h-1.18c-.4-.48-.89-.9-1.44-1.24L18.15 4.5l-1.41-1.41-2.4 2.4C13.56 5.17 12.8 5 12 5s-1.56.17-2.34.49l-2.4-2.4L5.85 4.5l1.77 2.26c-.55.34-1.04.76-1.44 1.24H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zM9 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg> AI:
-                              </span>
-                              {(client.ai_keywords || '').split(',').map((kw, i) => (
-                                kw.trim() && (
-                                  <span 
-                                    key={i} 
-                                    style={{ backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.7rem', padding: '0.1rem 0.3rem', borderRadius: '4px' }}
-                                  >
-                                    {kw.trim()}
-                                  </span>
-                                )
-                              ))}
-                            </div>
-                          )}
+                          ) : (() => {
+                            const kwList = (client.ai_keywords || '').split(',').map(k => k.trim()).filter(Boolean);
+                            const isExpanded = !!expandedKeywords[client.id];
+                            return (
+                              <div 
+                                onClick={() => toggleKeywords(client.id)}
+                                style={{ display: 'flex', gap: '0.25rem', flexWrap: 'wrap', alignItems: 'center', cursor: 'pointer', userSelect: 'none' }}
+                                title={isExpanded ? "Click to collapse keywords" : "Click to view all keywords"}
+                              >
+                                <span style={{ fontSize: '0.75rem', fontWeight: 500, marginRight: '0.25rem', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                  <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M19 8h-1.18c-.4-.48-.89-.9-1.44-1.24L18.15 4.5l-1.41-1.41-2.4 2.4C13.56 5.17 12.8 5 12 5s-1.56.17-2.34.49l-2.4-2.4L5.85 4.5l1.77 2.26c-.55.34-1.04.76-1.44 1.24H5c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zM9 16c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg> AI:
+                                </span>
+                                {isExpanded ? (
+                                  <>
+                                    {kwList.map((kw, i) => (
+                                      <span 
+                                        key={i} 
+                                        style={{ backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.7rem', padding: '0.1rem 0.3rem', borderRadius: '4px' }}
+                                      >
+                                        {kw}
+                                      </span>
+                                    ))}
+                                    <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 600, display: 'inline-flex', alignItems: 'center', marginLeft: '2px' }}>
+                                      ▲
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    {kwList.length > 0 && (
+                                      <span style={{ backgroundColor: '#f1f5f9', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.7rem', padding: '0.1rem 0.3rem', borderRadius: '4px' }}>
+                                        {kwList[0]}
+                                      </span>
+                                    )}
+                                    {kwList.length > 1 && (
+                                      <span style={{ fontSize: '0.7rem', color: '#2563eb', fontWeight: 600, display: 'inline-flex', alignItems: 'center', gap: '2px', marginLeft: '2px' }}>
+                                        +{kwList.length - 1} ▼
+                                      </span>
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                            );
+                          })()}
                         </td>
                         <td>
-                          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                          <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end', alignItems: 'center' }}>
+                            {client.google_account_id ? (
+                              <span 
+                                style={{ 
+                                  display: 'inline-flex', 
+                                  alignItems: 'center', 
+                                  gap: '4px', 
+                                  backgroundColor: '#ecfdf5', 
+                                  border: '1px solid #a7f3d0', 
+                                  color: '#047857', 
+                                  fontSize: '0.75rem', 
+                                  padding: '0.2rem 0.5rem', 
+                                  borderRadius: '6px', 
+                                  fontWeight: 500 
+                                }}
+                              >
+                                <svg style={{ width: '12px', height: '12px', fill: 'currentColor' }} viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg> Google Connected
+                              </span>
+                            ) : (
+                              <a 
+                                href={`${LIVE_API_URL}/auth/google?clientId=${client.id}&redirectUrl=${encodeURIComponent(window.location.href)}`}
+                                className="btn btn-primary btn-small"
+                                style={{ 
+                                  textDecoration: 'none', 
+                                  display: 'inline-flex', 
+                                  alignItems: 'center', 
+                                  gap: '4px', 
+                                  backgroundColor: '#4285F4', 
+                                  borderColor: '#4285F4', 
+                                  color: '#fff', 
+                                  padding: '4px 8px', 
+                                  borderRadius: '6px', 
+                                  fontSize: '0.75rem', 
+                                  fontWeight: 500 
+                                }}
+                              >
+                                <svg style={{ width: '10px', height: '10px', fill: '#fff' }} viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg> Connect Google
+                              </a>
+                            )}
                             <button 
                               className="btn btn-secondary btn-small"
                               onClick={() => navigate(`/dashboard?clientId=${client.id}`)}

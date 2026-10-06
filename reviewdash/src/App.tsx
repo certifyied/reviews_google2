@@ -20,11 +20,10 @@ const isAdminDomain =
   window.location.hostname === 'localhost';
 
 /**
- * AdminGuard: Only allows access to AdminDashboard on certifyied.com.
- * On reviewmanager.in redirects to /dashboard.
+ * AdminGuard: Renders AdminDashboard (which validates the user's JWT role internally).
  */
 function AdminGuard() {
-  return isAdminDomain ? <AdminDashboard /> : <Navigate to="/dashboard" replace />;
+  return <AdminDashboard />;
 }
 
 /**

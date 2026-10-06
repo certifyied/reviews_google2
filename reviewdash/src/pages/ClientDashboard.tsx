@@ -10,10 +10,26 @@ async function apiFetch(path: string, options: RequestInit = {}) {
       const res = await fetch(`${LOCAL_API_URL}${path}`, options);
       return res;
     } catch (err) {
-      console.warn('⚠️ Local worker connection failed, falling back to live worker.');
+      console.warn(' Local worker connection failed, falling back to live worker.');
     }
   }
   return await fetch(`${LIVE_API_URL}${path}`, options);
+}
+
+function parseJwt(token: string) {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      window.atob(base64)
+        .split('')
+        .map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    return null;
+  }
 }
 
 interface ClientProfile {
@@ -103,6 +119,13 @@ export default function ClientDashboard() {
   useEffect(() => {
     if (!token) {
       navigate('/login');
+      return;
+    }
+
+    // Redirect admin-level users to /admin console if no specific clientId query param is active
+    const payload = parseJwt(token);
+    if (payload && (payload.role === 'admin' || payload.role === 'global' || payload.role === 'blogger') && !queryClientId) {
+      navigate('/admin', { replace: true });
       return;
     }
 
@@ -486,6 +509,9 @@ export default function ClientDashboard() {
   });
 
   let activeClientId = queryClientId;
+  if (!activeClientId && locations.length > 0) {
+    activeClientId = locations[0].id;
+  }
   if (!activeClientId && token) {
     try {
       const payload = JSON.parse(window.atob(token.split('.')[1]));
@@ -897,7 +923,7 @@ export default function ClientDashboard() {
                   >
                     Sync Reviews & Reply
                   </button>
-                  <a href={`${LIVE_API_URL}/auth/google?clientId=${activeClientId}`} className="btn btn-danger btn-small" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <a href={`${LIVE_API_URL}/auth/google?clientId=${activeClientId}&redirectUrl=${encodeURIComponent(window.location.href)}`} className="btn btn-danger btn-small" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>
                     Reconnect
                   </a>
                 </div>
@@ -905,9 +931,9 @@ export default function ClientDashboard() {
             </div>
           ) : (
             <div>
-              {/*
+              
               <a 
-                href={`${LIVE_API_URL}/auth/google?clientId=${activeClientId}`}
+                href={`${LIVE_API_URL}/auth/google?clientId=${activeClientId}&redirectUrl=${encodeURIComponent(window.location.href)}`}
                 className="btn btn-primary"
                 style={{ 
                   display: 'inline-flex', 
@@ -927,8 +953,8 @@ export default function ClientDashboard() {
                 <svg style={{ width: '16px', height: '16px', fill: '#fff' }} viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/></svg>
                 Sign in with Google (OAuth Setup)
               </a>
-              */}
-              <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b', fontStyle: 'italic' }}>Google Business Profile API configuration is currently undergoing verification review.</p>
+             
+              <p style={{ margin: '8px 0 0', fontSize: '0.85rem', color: '#16a34a', fontWeight: 500 }}>✓ Google Business Profile API connection is active and approved.</p>
             </div>
           )}
         </div>
